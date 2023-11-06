@@ -17,6 +17,16 @@ from PyQt5.QtWidgets import QApplication, QWidget,QFileDialog,QTableWidget,QTabl
 import mysql.connector
 import pandas as pd
 
+### import variaveis de controle
+
+import variaveisControle
+
+### conexao com o banco de dados
+host = variaveisControle.host
+user = variaveisControle.user
+password = variaveisControle.password
+database = variaveisControle.database
+     
 
 class Ui_formCliente(object):
     def setupUi(self, formCliente):
@@ -127,6 +137,7 @@ class Ui_formCliente(object):
 ##### BOTÕES SISTEMA #######
         self.bt_retornar.clicked.connect(lambda:self.sairTela(formCliente))
         self.bt_pesquisarGeral.clicked.connect(self.consultarGeral)
+        self.bt_pesquisar.clicked.connect(self.pesquisarCliente)
 
 ###### FUNÇÕES SISTEMA ######
 ## fechar tela cliente
@@ -136,10 +147,10 @@ class Ui_formCliente(object):
 ## consultar tabela Cliente geral
     def consultarGeral(self):
         mydb = mysql.connector.connect(
-        host = 'localhost',
-        user = 'root',
-        password = 'root',
-        database = 'python'
+        host = host,
+        user = user,
+        password = password,
+        database = database
     )
         mycursor = mydb.cursor()        
         mycursor.execute("SELECT * FROM cliente ")
@@ -162,6 +173,39 @@ class Ui_formCliente(object):
         self.tb_cliente.resizeRowsToContents()
 
         mycursor.close() # Fecha conexao
+
+ ## Pesquisar por nome cliente
+    def pesquisarCliente(self):        
+        mydb = mysql.connector.connect(
+        host = host,
+        user = user,
+        password = password,
+        database = database
+    )
+        mycursor = mydb.cursor()    
+        nome_consulta = self.lineEdit.text()  
+        consulta_sql = "SELECT * FROM cliente WHERE nome LIKE   '" + nome_consulta + "%'" 
+        mycursor.execute(consulta_sql)
+        myresult = mycursor.fetchall()
+
+        df = pd.DataFrame(myresult, columns=['ID','Nome','Telefone','Cidade'])
+        self.all_data = df
+
+        # carrega arquivo na tabela tb_cliente
+        numRows =len(self.all_data.index)
+        self.tb_cliente.setColumnCount(len(self.all_data.columns))
+        self.tb_cliente.setRowCount(numRows)
+        self.tb_cliente.setHorizontalHeaderLabels(self.all_data.columns)
+
+        for i in range(numRows):
+            for j in range(len(self.all_data.columns)):
+                self.tb_cliente.setItem(i, j, QTableWidgetItem(str(self.all_data.iat[i,j])))
+
+        self.tb_cliente.resizeColumnsToContents()
+        self.tb_cliente.resizeRowsToContents()
+
+        mycursor.close() # Fecha conexao
+
 
 # IMAGENS DO SISTEMA ####
 import icon_adicionar
