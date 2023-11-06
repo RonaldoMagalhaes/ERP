@@ -10,6 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+# IMPORT TELAS DO SISTEMA QUE CRIAMOS
+
+from cliente import Ui_formCliente
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -233,13 +236,20 @@ class Ui_MainWindow(object):
         self.actionResumido_2.setText(_translate("MainWindow", "Resumido"))
         
 ##### BOTÕES SISTEMA #######
-        self.bt_sair.clicked.connect(self.sairSistema)
-
+        self.bt_sair.clicked.connect(self.sairSistema) #fecha o sistema
+        self.bt_cliente.clicked.connect(self.telaCliente) # abre tela cliente
+        self.actionCliente.triggered.connect(self.telaCliente)
 
 ###### FUNÇÕES SISTEMA ######
+##Abre Sair do Sistema
     def sairSistema(self):
         sys.exit()
-
+##Abre tela cliente
+    def telaCliente(self):
+        self.formCliente = QtWidgets.QWidget()
+        self.ui = Ui_formCliente()
+        self.ui.setupUi(self.formCliente)
+        self.formCliente.show()
 
 
 ### IMAGENS SISTEMA ############

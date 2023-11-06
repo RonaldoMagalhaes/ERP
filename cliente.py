@@ -116,13 +116,25 @@ class Ui_formCliente(object):
         item = self.tb_cliente.horizontalHeaderItem(3)
         item.setText(_translate("formCliente", "Cidade"))
         self.nome_cliente.setText(_translate("formCliente", "Nome Cliente:"))
-import icon_adicionar_rc
-import icon_alterar_rc
-import icon_consultar_rc
-import icon_excluir_rc
-import icon_geral_rc
-import icon_pesquisar_rc
-import icon_retornar_rc
+
+##### BOTÕES SISTEMA #######
+        self.bt_retornar.clicked.connect(lambda:self.sairTela(formCliente))
+
+###### FUNÇÕES SISTEMA ######
+## fechar tela cliente
+    def sairTela(self, formCliente):
+        formCliente.close()
+
+
+
+# IMAGENS DO SISTEMA ####
+import icon_adicionar
+import icon_alterar
+import icon_consultar
+import icon_excluir
+import icon_geral
+import icon_pesquisar
+import icon_retornar
 
 
 if __name__ == "__main__":
