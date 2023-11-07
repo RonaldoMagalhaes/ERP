@@ -61,8 +61,14 @@ class Ui_form_dadosCliente(object):
         self.lb_nome.setText(_translate("form_dadosCliente", "Nome:"))
         self.lb_telefone.setText(_translate("form_dadosCliente", "Telefone:"))
         self.lb_cidade.setText(_translate("form_dadosCliente", "Cidade:"))
-import icon_cadastrar_rc
-import icon_cancelar_rc
+
+##### BOTÕES SISTEMA #######
+# 
+        
+###### FUNÇÕES SISTEMA ######
+# Imagens do sistema
+import icon_cadastrar
+import icon_cancelar
 
 
 if __name__ == "__main__":

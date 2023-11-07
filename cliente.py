@@ -13,12 +13,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget,QFileDialog,QTableWidget,QTableWidgetItem
 
 # Libs diversas
-
 import mysql.connector
 import pandas as pd
 
-### import variaveis de controle
+# import de telas
+from dadosCliente import Ui_form_dadosCliente
 
+### import variaveis de controle
 import variaveisControle
 
 ### conexao com o banco de dados
@@ -138,6 +139,7 @@ class Ui_formCliente(object):
         self.bt_retornar.clicked.connect(lambda:self.sairTela(formCliente))
         self.bt_pesquisarGeral.clicked.connect(self.consultarGeral)
         self.bt_pesquisar.clicked.connect(self.pesquisarCliente)
+        self.bt_adicionar.clicked.connect(self.cadastrarCliente)
 
 ###### FUNÇÕES SISTEMA ######
 ## fechar tela cliente
@@ -206,6 +208,13 @@ class Ui_formCliente(object):
 
         mycursor.close() # Fecha conexao
 
+
+## Função cadastrar cliente
+    def cadastrarCliente(self):
+        self.form_dadosCliente = QtWidgets.QWidget()
+        self.ui = Ui_form_dadosCliente()
+        self.ui.setupUi(self.form_dadosCliente)
+        self.form_dadosCliente.show()
 
 # IMAGENS DO SISTEMA ####
 import icon_adicionar
