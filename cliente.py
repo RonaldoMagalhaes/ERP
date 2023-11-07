@@ -142,6 +142,7 @@ class Ui_formCliente(object):
         self.bt_adicionar.clicked.connect(self.cadastrarCliente)
         self.bt_consultar.clicked.connect(self.consultarCliente)
         self.bt_alterar.clicked.connect(self.alterarCliente)
+        self.bt_excluir.clicked.connect(self.excluirCliente)
 
 
 ###### FUNÇÕES SISTEMA ######
@@ -258,6 +259,56 @@ class Ui_formCliente(object):
         self.ui = Ui_form_dadosCliente()
         self.ui.setupUi(self.form_dadosCliente)
         self.form_dadosCliente.show()
+
+## função excluir cliente
+
+    def excluirCliente(self):
+        
+        line = self.tb_cliente.currentRow()
+        item = self.tb_cliente.item(line,0)
+        id_cliente = item.text()
+
+        ##conexao com o bando de dadods
+
+        mydb = mysql.connector.connect(
+            host = host,
+            user = user,
+            password = password,
+            database = database
+        )
+
+        mycursor = mydb.cursor()
+        sql = "DELETE FROM cliente WHERE IdCliente = '" + id_cliente+ "'"  
+        mycursor.execute(sql)
+        mydb.commit()
+
+        print(mycursor.rowcount, ' record(s) exclused')
+        #atualizar a tabela
+
+             
+        mycursor.execute("SELECT * FROM cliente ")
+        myresult = mycursor.fetchall()
+
+        df = pd.DataFrame(myresult, columns=['ID','Nome','Telefone','Cidade'])
+        self.all_data = df
+
+        # carrega arquivo na tabela tb_cliente
+        numRows =len(self.all_data.index)
+        self.tb_cliente.setColumnCount(len(self.all_data.columns))
+        self.tb_cliente.setRowCount(numRows)
+        self.tb_cliente.setHorizontalHeaderLabels(self.all_data.columns)
+
+        for i in range(numRows):
+            for j in range(len(self.all_data.columns)):
+                self.tb_cliente.setItem(i, j, QTableWidgetItem(str(self.all_data.iat[i,j])))
+
+        self.tb_cliente.resizeColumnsToContents()
+        self.tb_cliente.resizeRowsToContents()
+
+        mycursor.close() # Fecha conexao
+
+           
+
 
 
 # IMAGENS DO SISTEMA ####
