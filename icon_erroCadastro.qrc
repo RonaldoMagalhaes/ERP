@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="icon_erroCadastro">
+    <file>icons/retornar.png</file>
+  </qresource>
+</RCC>

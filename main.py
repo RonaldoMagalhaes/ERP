@@ -40,8 +40,7 @@ class Ui_MainWindow(object):
         self.bt_fornecedor.setObjectName("bt_fornecedor")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(90, 10, 61, 51))
-        self.label_3.setStyleSheet("image:url(:/icon_fornecedor/icons/fornecedor.png)\n"
-"")
+        self.label_3.setStyleSheet("image:url(:/icon_fornecedor/icons/fornecedor.png)")
         self.label_3.setText("")
         self.label_3.setObjectName("label_3")
         self.b_produtos = QtWidgets.QPushButton(self.centralwidget)

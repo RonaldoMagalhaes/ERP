@@ -140,10 +140,13 @@ class Ui_formCliente(object):
         self.bt_pesquisarGeral.clicked.connect(self.consultarGeral)
         self.bt_pesquisar.clicked.connect(self.pesquisarCliente)
         self.bt_adicionar.clicked.connect(self.cadastrarCliente)
+        self.bt_consultar.clicked.connect(self.consultarCliente)
+        self.bt_alterar.clicked.connect(self.alterarCliente)
+
 
 ###### FUNÇÕES SISTEMA ######
 ## fechar tela cliente
-    def sairTela(self, formCliente):
+    def sairTela(self, formCliente):        
         formCliente.close()
 
 ## consultar tabela Cliente geral
@@ -189,7 +192,6 @@ class Ui_formCliente(object):
         consulta_sql = "SELECT * FROM cliente WHERE nome LIKE   '" + nome_consulta + "%'" 
         mycursor.execute(consulta_sql)
         myresult = mycursor.fetchall()
-
         df = pd.DataFrame(myresult, columns=['ID','Nome','Telefone','Cidade'])
         self.all_data = df
 
@@ -211,10 +213,52 @@ class Ui_formCliente(object):
 
 ## Função cadastrar cliente
     def cadastrarCliente(self):
+        variaveisControle.tipoTelaDadosCliente = "incluir"
+
         self.form_dadosCliente = QtWidgets.QWidget()
         self.ui = Ui_form_dadosCliente()
         self.ui.setupUi(self.form_dadosCliente)
         self.form_dadosCliente.show()
+
+## Função consultar cliente
+    def consultarCliente(self):
+        #tipo tela dadosCliente
+        variaveisControle.tipoTelaDadosCliente = "consultar"
+        print('FormCliente: ', variaveisControle.tipoTelaDadosCliente)
+
+        #ID para consulta
+
+        line = self.tb_cliente.currentRow()
+        item = self.tb_cliente.item(line,0)
+        variaveisControle.idConsulta = item.text()
+       # print('IdConsulta: ', variaveisControle.idConsulta)
+
+        ##Abertura da tela cliente
+        self.form_dadosCliente = QtWidgets.QWidget()
+        self.ui = Ui_form_dadosCliente()
+        self.ui.setupUi(self.form_dadosCliente)
+        self.form_dadosCliente.show()
+
+
+## Função Alterar cliente
+    def alterarCliente(self):
+        #tipo tela dadosCliente
+        variaveisControle.tipoTelaDadosCliente = "alterar"
+        print('FormCliente: ', variaveisControle.tipoTelaDadosCliente)
+
+        #ID para consulta
+
+        line = self.tb_cliente.currentRow()
+        item = self.tb_cliente.item(line,0)
+        variaveisControle.idConsulta = item.text()
+       # print('IdConsulta: ', variaveisControle.idConsulta)
+
+        ##Abertura da tela cliente
+        self.form_dadosCliente = QtWidgets.QWidget()
+        self.ui = Ui_form_dadosCliente()
+        self.ui.setupUi(self.form_dadosCliente)
+        self.form_dadosCliente.show()
+
 
 # IMAGENS DO SISTEMA ####
 import icon_adicionar
